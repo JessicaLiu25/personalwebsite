@@ -1,0 +1,918 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #ffffff; 
+    scroll-behavior: smooth;
+}
+
+a { text-decoration: none; color: inherit; transition: color 0.3s; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; object-fit: cover; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+    position: relative;
+    background-color: transparent;
+}
+section:not(:last-of-type)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1160px;
+    height: 1px;
+    background-color: #999999;
+}
+
+
+.bg-white { background-color: #fff; }
+
+h2.section-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #333;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    transition: height 0.3s ease;
+}
+
+header.shrink .header-content {
+    height: 60px;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.main-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #000;
+    margin: 0;
+}
+
+.sub-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+nav ul {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    text-transform: uppercase;
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+nav a:hover {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 15px;
+    }
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+nav a {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    text-transform: uppercase;
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+nav a.active {
+    color: #000;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 2 / 2.5;
+    overflow: hidden;
+    border-radius: 8px;
+    background: transparent;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img {
+    transform: scale(1.05);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 80px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 2;
+}
+
+.card:hover .card-overlay {
+    height: 100%;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.card-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    margin: 0;
+}
+
+.card-hover-info {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease 0.1s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card:hover .card-hover-info {
+    max-height: 250px;
+    opacity: 1;
+    margin-top: 15px;
+}
+
+.card-date {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.card-desc {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.see-more-btn {
+    display: inline-block;
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.6);
+    padding: 6px 18px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.see-more-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+.movie-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.movie-img {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    background-color: #eee;
+}
+
+.movie-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.movie-card:hover .movie-img img {
+    transform: scale(1.05);
+}
+
+.movie-info {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.movie-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+}
+
+.movie-title-row h3 {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #222;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.explore-btn {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.movie-card:hover .explore-btn {
+    color: #000;
+    transform: translateX(5px);
+}
+
+.movie-date {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.movie-text {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify;
+    font-weight: 300;
+}
+
+@media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .movie-img { height: 300px; }
+}
+
+.portrait-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    width: 100%;
+}
+
+.portrait-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
+    line-height: 0;
+}
+
+.portrait-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: brightness(0.9);
+}
+
+.portrait-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 2;
+    pointer-events: none; 
+}
+
+.portrait-item:hover .portrait-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.portrait-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.portrait-overlay * {
+    pointer-events: auto;
+}
+
+.more-btn {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    background: transparent;
+    border: none; 
+    border-radius: 0;
+    padding: 0;
+    opacity: 0.9;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.portrait-item:hover .more-btn {
+    color: #fff;
+    opacity: 1;
+    transform: translateY(0);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.more-btn:hover {
+    color: #fff;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .portrait-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+}
+
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 85vh;
+    border: 2px solid #fff;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10002;
+    user-select: none;
+    font-family: sans-serif;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10002;
+    background: rgba(255,255,255,0.1);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+    font-family: monospace;
+}
+
+.lightbox-arrow:hover {
+    background: rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
+
+.lightbox-arrow.disabled {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+}
+
+.lightbox-caption {
+    color: #fff;
+    margin-top: 15px;
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .lightbox-arrow { font-size: 30px; width: 40px; height: 40px; }
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+}
+
+.arch-split-layout {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.arch-left-static {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f0f0f0;
+}
+
+.arch-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 400px; 
+}
+
+.arch-right-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.arch-text-block {
+    margin-bottom: 20px;
+}
+
+.arch-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18;
+    font-weight: 400;
+    color: #222;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.arch-paragraph {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+    text-align: justify;
+}
+
+.arch-thumb-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.thumb-item {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #eee;
+}
+
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.arch-action-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.arch-view-btn {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    background: transparent;
+    border: 1px solid #333;
+    padding: 10px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.arch-view-btn:hover {
+    background: #333;
+    color: #fff;
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .arch-split-layout {
+        flex-direction: column;
+    }
+    .arch-main-img {
+        min-height: 250px;
+    }
+    .arch-action-row {
+        justify-content: center;
+    }
+}
+
+.arch-lightbox-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.98);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.arch-lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.arch-lightbox-overlay .lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10002;
+    user-select: none;
+    font-family: sans-serif;
+    line-height: 1;
+    transition: color 0.3s;
+}
+.arch-lightbox-overlay .lightbox-close:hover { color: #ccc; }
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    z-index: 10002;
+    user-select: none;
+    transition: color 0.3s;
+    padding: 20px;
+}
+.lightbox-arrow:hover { color: #fff; }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-arrow.disabled { opacity: 0; pointer-events: none; }
+
+.arch-viewport {
+    width: 90vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+}
+
+.arch-viewport.grabbing {
+    cursor: grabbing;
+}
+
+.arch-zoom-img {
+    object-fit: contain;
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform;
+}
+
+.lightbox-caption {
+    color: #fff;
+    margin-top: 20px;
+    font-family: "Optima", sans-serif;
+    font-size: 16px;
+    text-align: center;
+    opacity: 0.7;
+    min-height: 24px;
+}
+
+.arch-viewport {
+    width: 90vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    background-color: #000;
+}
+
+.arch-viewport.grabbing {
+    cursor: grabbing;
+}
+
+.arch-zoom-img {
+    width: auto; 
+    height: auto;
+    object-fit: none; 
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .arch-viewport { width: 95vw; height: 75vh; }
+    .lightbox-arrow { font-size: 30px; padding: 10px; }
+    .arch-lightbox-overlay .lightbox-close { top: 20px; right: 20px; font-size: 30px; }
+}
+
+.about-section {
+    background-color: #fff;
+    padding: 100px 0;
+}
+
+.about-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-left {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+}
+
+.about-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
+}
+
+.about-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.about-title {
+    font-family: "Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.about-description {
+    font-family:"Optima", "Segoe UI", "Calibri", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #555;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.social-icons-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.social-link {
+    display: block;
+    width: 30px;
+    height: 50px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.8;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.social-icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .about-layout {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .about-right {
+        align-items: center;
+        padding-top: 0;
+    }
+
+    .about-description {
+        text-align: center;
+    }
+
+    .social-icons-row {
+        justify-content: center;
+    }
+}
